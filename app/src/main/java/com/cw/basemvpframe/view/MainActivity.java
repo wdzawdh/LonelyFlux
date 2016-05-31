@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.base.BaseActivity;
@@ -13,7 +14,7 @@ import com.cw.basemvpframe.base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private final int MAIN_PAGE_COUNT = 4;
 
@@ -43,6 +44,8 @@ public class MainActivity extends BaseActivity {
     private void initFoot() {
         //add foot
         View footView = View.inflate(getApplicationContext(), R.layout.foot_main, null);
+        RadioGroup rgTabBar = (RadioGroup) footView.findViewById(R.id.rg_tab_bar);
+        rgTabBar.setOnCheckedChangeListener(this);
         footMain.addView(footView);
     }
 
@@ -76,5 +79,25 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getFragmentContentId() {
         return R.id.ll_main;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rb_1:
+                //设置ViewPager到指定的页面
+                //第二个参数代表是否需要切换时滑动的视觉效果
+                contentMain.setCurrentItem(0, false);
+                break;
+            case R.id.rb_2:
+                contentMain.setCurrentItem(1, false);
+                break;
+            case R.id.rb_3:
+                contentMain.setCurrentItem(2, false);
+                break;
+            case R.id.rb_4:
+                contentMain.setCurrentItem(3, false);
+                break;
+        }
     }
 }

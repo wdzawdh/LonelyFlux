@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RadioGroup
+        android:id="@+id/rg_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_1"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/radio_but"
+            android:text="First" />
+
+        <RadioButton
+            android:id="@+id/rb_2"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/radio_but"
+            android:text="Second" />
+
+        <RadioButton
+            android:id="@+id/rb_3"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/radio_but"
+            android:text="third" />
+
+        <RadioButton
+            android:id="@+id/rb_4"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/radio_but"
+            android:text="fours" />
+
+    </RadioGroup>
+
 
 </LinearLayout>
