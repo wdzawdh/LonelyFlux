@@ -35,7 +35,7 @@ public abstract class BaseAppActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentViewId());
+        setContentView(R.layout.activity_base_app);
         if (null != getIntent()) {
             handleIntent(getIntent());
         }
@@ -47,11 +47,6 @@ public abstract class BaseAppActivity extends BaseActivity {
             }
         }
 
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_base;
     }
 
     @Override

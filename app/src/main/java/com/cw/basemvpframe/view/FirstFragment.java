@@ -1,5 +1,4 @@
 /**
- *
  *   @function:$
  *   @description: $
  *   @param:$
@@ -14,29 +13,32 @@ package com.cw.basemvpframe.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.base.BaseFragment;
 
+import butterknife.Bind;
+
 /**
  * 给Fragment添加newInstance方法，将需要的参数传入，设置到bundle中，然后setArguments(bundle)，最后在onCreate中进行获取。
+ * 调用者只需要关系传递的哪些数据，而无需关心传递数据的Key是什么。
  * @author Cw
  * @date 16/5/30
  */
 public class FirstFragment extends BaseFragment {
+
+    public static String FIRST_FRAGMENT = "first_fragment";
+
+    private String msg;
+
+    @Bind(R.id.username_edt)
+    TextView tvUsername;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_first;
     }
-
-    public static String FIRST_FRAGMENT = "first_fragment";
-    private String msg;
-    private EditText usernameEdt;
-    private TextView registerTxt, promiseTxt;
-    private ImageView backImg;
 
     public static FirstFragment newInstance(String msg) {
         FirstFragment fragment = new FirstFragment();
@@ -56,11 +58,8 @@ public class FirstFragment extends BaseFragment {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        usernameEdt = (EditText) view.findViewById(R.id.username_edt);
-        usernameEdt.setText(msg);
-
-
+        tvUsername = (TextView) view.findViewById(R.id.username_edt);
+        tvUsername.setText(msg);
     }
-
 
 }

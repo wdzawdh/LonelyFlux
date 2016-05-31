@@ -10,9 +10,6 @@ import android.view.KeyEvent;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    //布局文件ID
-    protected abstract int getContentViewId();
-
     //布局中Fragment的ID
     protected abstract int getFragmentContentId();
 

@@ -23,10 +23,10 @@ import com.cw.basemvpframe.base.BaseFragment;
  * @author Cw
  * @date 16/5/30
  */
-public class SecondFragment extends BaseFragment {
+public class FoursFragment extends BaseFragment {
 
-    public static SecondFragment newInstance() {
-        return new SecondFragment();
+    public static FoursFragment newInstance() {
+        return new FoursFragment();
     }
 
     @Override
@@ -36,7 +36,6 @@ public class SecondFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_second;
+        return R.layout.fragment_fours;
     }
-
 }
