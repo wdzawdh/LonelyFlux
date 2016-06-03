@@ -7,10 +7,10 @@ import com.cw.basemvpframe.model.MainMessage;
 import com.squareup.otto.Subscribe;
 
 /**
- * MessageStore类主要用来维护MainActivity的UI状态
+ * MainStore类主要用来维护MainActivity的UI状态
  */
 public class MainStore extends Store {
-    private static MainStore singleton;
+
     private MainMessage mMessage = new MainMessage();
 
     public MainStore() {

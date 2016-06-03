@@ -22,7 +22,7 @@ public class ActionsCreator {
         return instance;
     }
 
-    public void sendMessage(int message) {
+    public void sendMainMessage(int message) {
         dispatcher.dispatch(new MainAction(MainAction.ACTION_CHANGE_FRAGMENT, message));
     }
 }

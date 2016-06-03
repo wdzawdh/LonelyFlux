@@ -1,8 +1,6 @@
 package com.cw.basemvpframe.controlview;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,6 +9,7 @@ import android.widget.RadioGroup;
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseActivity;
+import com.cw.basemvpframe.controlview.adapter.MainFragmentPagerAdapter;
 import com.cw.basemvpframe.dispatcher.Dispatcher;
 import com.cw.basemvpframe.stores.MainStore;
 import com.squareup.otto.Subscribe;
@@ -20,14 +19,12 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
-    private final int MAIN_PAGE_COUNT = 4;
+    public static final int MAIN_PAGE_COUNT = 4;
 
-    @Bind(R.id.fl_title_main)
-    FrameLayout titleMain;
-    @Bind(R.id.vp_content_main)
-    ViewPager contentMain;
-    @Bind(R.id.fl_foot_main)
-    FrameLayout footMain;
+    @Bind(R.id.fl_title_main) FrameLayout titleMain;
+    @Bind(R.id.vp_content_main) ViewPager contentMain;
+    @Bind(R.id.fl_foot_main) FrameLayout footMain;
+
     private ActionsCreator actionsCreator;
     private MainStore store;
 
@@ -66,29 +63,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     private void initView() {
         //add content
-        contentMain.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return MAIN_PAGE_COUNT;
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return FirstFragment.newInstance("模拟参数");
-                    case 1:
-                        return SecondFragment.newInstance();
-                    case 2:
-                        return ThirdFragment.newInstance();
-                    case 3:
-                        return FoursFragment.newInstance();
-                    default:
-                        return FirstFragment.newInstance("模拟参数");
-                }
-
-            }
-        });
+        contentMain.setAdapter(new MainFragmentPagerAdapter(getSupportFragmentManager()));
     }
 
     @Override
@@ -98,13 +73,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        actionsCreator.sendMessage(checkedId);
+        actionsCreator.sendMainMessage(checkedId);
     }
 
     @Subscribe
     public void onFragmentChange(MainStore.MainFragmentEvent event) {
         fragmentChange(store);
     }
+
+
 
     /**
      * 设置ViewPager到指定的页面

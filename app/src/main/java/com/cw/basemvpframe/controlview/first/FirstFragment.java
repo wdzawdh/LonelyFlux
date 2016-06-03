@@ -9,7 +9,7 @@
  *           modification:
  */
 
-package com.cw.basemvpframe.controlview;
+package com.cw.basemvpframe.controlview.first;
 
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +32,7 @@ public class FirstFragment extends BaseFragment {
 
     private String msg;
 
-    @Bind(R.id.username_edt)
-    TextView tvUsername;
+    @Bind(R.id.username_edt) TextView tvUsername;
 
     @Override
     protected int getLayoutId() {
