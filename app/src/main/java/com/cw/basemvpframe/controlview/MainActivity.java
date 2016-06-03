@@ -1,4 +1,4 @@
-package com.cw.basemvpframe.view;
+package com.cw.basemvpframe.controlview;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 import com.cw.basemvpframe.R;
+import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseActivity;
+import com.cw.basemvpframe.dispatcher.Dispatcher;
+import com.cw.basemvpframe.stores.MainStore;
+import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,15 +28,26 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     ViewPager contentMain;
     @Bind(R.id.fl_foot_main)
     FrameLayout footMain;
+    private ActionsCreator actionsCreator;
+    private MainStore store;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initDependencies();
         initTitle();
         initFoot();
         initView();
+    }
+
+    private void initDependencies() {
+        Dispatcher dispatcher = Dispatcher.get();
+        actionsCreator = ActionsCreator.get(dispatcher);
+        store = new MainStore();
+        dispatcher.register(store);
     }
 
     private void initTitle() {
@@ -83,9 +98,21 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
+        actionsCreator.sendMessage(checkedId);
+    }
+
+    @Subscribe
+    public void onFragmentChange(MainStore.MainFragmentEvent event) {
+        fragmentChange(store);
+    }
+
+    /**
+     * 设置ViewPager到指定的页面
+     */
+    private void fragmentChange(MainStore store) {
+
+        switch (store.getMessage()) {
             case R.id.rb_1:
-                //设置ViewPager到指定的页面
                 //第二个参数代表是否需要切换时滑动的视觉效果
                 contentMain.setCurrentItem(0, false);
                 break;
@@ -99,5 +126,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 contentMain.setCurrentItem(3, false);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        store.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        store.unregister(this);
     }
 }

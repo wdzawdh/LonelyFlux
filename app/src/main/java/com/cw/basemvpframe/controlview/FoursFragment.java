@@ -10,7 +10,7 @@
  *           modification:
  */
 
-package com.cw.basemvpframe.view;
+package com.cw.basemvpframe.controlview;
 
 import android.os.Bundle;
 import android.view.View;

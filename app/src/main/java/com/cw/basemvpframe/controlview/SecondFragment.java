@@ -10,7 +10,7 @@
  *           modification:
  */
 
-package com.cw.basemvpframe.view;
+package com.cw.basemvpframe.controlview;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +23,10 @@ import com.cw.basemvpframe.base.BaseFragment;
  * @author Cw
  * @date 16/5/30
  */
-public class ThirdFragment extends BaseFragment {
+public class SecondFragment extends BaseFragment {
 
-    public static ThirdFragment newInstance() {
-        return new ThirdFragment();
+    public static SecondFragment newInstance() {
+        return new SecondFragment();
     }
 
     @Override
@@ -36,6 +36,7 @@ public class ThirdFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_third;
+        return R.layout.fragment_second;
     }
+
 }
