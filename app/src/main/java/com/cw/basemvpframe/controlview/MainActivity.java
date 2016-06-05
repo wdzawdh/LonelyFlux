@@ -1,9 +1,12 @@
 package com.cw.basemvpframe.controlview;
 
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.cw.basemvpframe.R;
@@ -17,16 +20,24 @@ import com.squareup.otto.Subscribe;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     public static final int MAIN_PAGE_COUNT = 4;
 
-    @Bind(R.id.fl_title_main) FrameLayout titleMain;
-    @Bind(R.id.vp_content_main) ViewPager contentMain;
-    @Bind(R.id.fl_foot_main) FrameLayout footMain;
+    @Bind(R.id.fl_title_main)
+    FrameLayout titleMain;
+    @Bind(R.id.vp_content_main)
+    ViewPager contentMain;
+    @Bind(R.id.fl_foot_main)
+    FrameLayout footMain;
+    @Bind(R.id.dl_left_menu)
+    DrawerLayout leftMenu;
+
 
     private ActionsCreator actionsCreator;
     private MainStore store;
+    private ImageView ivOpenDrawerlayout;
 
 
     @Override
@@ -50,6 +61,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private void initTitle() {
         //add title
         View titleView = View.inflate(getApplicationContext(), R.layout.title_main, null);
+        ivOpenDrawerlayout = (ImageView) titleView.findViewById(R.id.iv_open_drawerlayout);
+        ivOpenDrawerlayout.setOnClickListener(this);
         titleMain.addView(titleView);
     }
 
@@ -82,7 +95,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
 
-
     /**
      * 设置ViewPager到指定的页面
      */
@@ -103,6 +115,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 contentMain.setCurrentItem(3, false);
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        leftMenu.openDrawer(GravityCompat.START);
     }
 
     @Override
