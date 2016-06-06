@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cw.basemvpframe.actions.ActionsCreator;
+
 import butterknife.ButterKnife;
 
 /**
@@ -29,6 +31,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected BaseActivity mActivity;
+    private View mRootView;
 
     protected abstract void initView(View view, Bundle savedInstanceState);
 
@@ -61,15 +64,17 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(this,view);
-        initView(view, savedInstanceState);
-        return view;
+        mRootView = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(mRootView);
+        initView(mRootView, savedInstanceState);
+        return mRootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        ButterKnife.unbind(mRootView);
+        ActionsCreator.ActionDectory();
     }
+
 }

@@ -1,7 +1,7 @@
 package com.cw.basemvpframe.stores;
 
 
-import com.cw.basemvpframe.actions.Action;
+import com.cw.basemvpframe.base.Action;
 import com.cw.basemvpframe.actions.MainAction;
 import com.cw.basemvpframe.model.MainMessage;
 import com.squareup.otto.Subscribe;

@@ -1,6 +1,6 @@
 package com.cw.basemvpframe.stores;
 
-import com.cw.basemvpframe.actions.Action;
+import com.cw.basemvpframe.base.Action;
 import com.squareup.otto.Bus;
 
 /**

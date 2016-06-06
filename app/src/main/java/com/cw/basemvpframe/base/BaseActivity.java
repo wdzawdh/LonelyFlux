@@ -3,6 +3,8 @@ package com.cw.basemvpframe.base;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.cw.basemvpframe.actions.ActionsCreator;
+
 /**
  *
  * @author Cw
@@ -51,5 +53,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActionsCreator.ActionDectory();
     }
 }

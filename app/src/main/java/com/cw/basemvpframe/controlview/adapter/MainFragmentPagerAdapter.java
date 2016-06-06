@@ -42,7 +42,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FirstFragment.newInstance("模拟参数");
+                return FirstFragment.newInstance();
             case 1:
                 return SecondFragment.newInstance();
             case 2:
@@ -50,7 +50,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return FoursFragment.newInstance();
             default:
-                return FirstFragment.newInstance("模拟参数");
+                return FirstFragment.newInstance();
         }
 
     }

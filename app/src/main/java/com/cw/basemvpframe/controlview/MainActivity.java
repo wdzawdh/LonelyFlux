@@ -13,7 +13,6 @@ import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseActivity;
 import com.cw.basemvpframe.controlview.adapter.MainFragmentPagerAdapter;
-import com.cw.basemvpframe.dispatcher.Dispatcher;
 import com.cw.basemvpframe.stores.MainStore;
 import com.squareup.otto.Subscribe;
 
@@ -25,19 +24,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     public static final int MAIN_PAGE_COUNT = 4;
 
-    @Bind(R.id.fl_title_main)
-    FrameLayout titleMain;
-    @Bind(R.id.vp_content_main)
-    ViewPager contentMain;
-    @Bind(R.id.fl_foot_main)
-    FrameLayout footMain;
-    @Bind(R.id.dl_left_menu)
-    DrawerLayout leftMenu;
+    @Bind(R.id.fl_title_main) FrameLayout titleMain;
+    @Bind(R.id.vp_content_main) ViewPager contentMain;
+    @Bind(R.id.fl_foot_main) FrameLayout footMain;
+    @Bind(R.id.dl_left_menu) DrawerLayout leftMenu;
 
-
-    private ActionsCreator actionsCreator;
-    private MainStore store;
     private ImageView ivOpenDrawerlayout;
+    private ActionsCreator actionsCreator;
+    private MainStore mainStore;
 
 
     @Override
@@ -52,10 +46,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void initDependencies() {
-        Dispatcher dispatcher = Dispatcher.get();
-        actionsCreator = ActionsCreator.get(dispatcher);
-        store = new MainStore();
-        dispatcher.register(store);
+        mainStore = new MainStore();
+        actionsCreator = ActionsCreator.newInstance(mainStore);
     }
 
     private void initTitle() {
@@ -91,7 +83,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Subscribe
     public void onFragmentChange(MainStore.MainFragmentEvent event) {
-        fragmentChange(store);
+        fragmentChange(mainStore);
     }
 
 
@@ -119,18 +111,21 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onClick(View v) {
-        leftMenu.openDrawer(GravityCompat.START);
+        if(v==ivOpenDrawerlayout){
+            //打开左侧菜单
+            leftMenu.openDrawer(GravityCompat.START);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        store.register(this);
+        mainStore.register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        store.unregister(this);
+        mainStore.unregister(this);
     }
 }

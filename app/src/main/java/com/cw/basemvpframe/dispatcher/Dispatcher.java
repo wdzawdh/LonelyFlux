@@ -1,7 +1,7 @@
 package com.cw.basemvpframe.dispatcher;
 
 
-import com.cw.basemvpframe.actions.Action;
+import com.cw.basemvpframe.base.Action;
 import com.cw.basemvpframe.stores.Store;
 
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ public class Dispatcher {
     private static Dispatcher instance;
     private final List<Store> stores = new ArrayList<>();
 
-    public static Dispatcher get() {
+    private Dispatcher() {}
+
+    public static Dispatcher newInstance() {
         if (instance == null) {
             instance = new Dispatcher();
         }
         return instance;
     }
-
-    Dispatcher() {}
 
     public void register(final Store store) {
         if (!stores.contains(store)) {
