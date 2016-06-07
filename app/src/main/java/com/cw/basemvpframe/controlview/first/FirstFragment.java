@@ -11,18 +11,24 @@
 
 package com.cw.basemvpframe.controlview.first;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseFragment;
+import com.cw.basemvpframe.controlview.adapter.ZhuangbiListAdapter;
 import com.cw.basemvpframe.model.ZhuangbiImage;
 import com.cw.basemvpframe.stores.FirstStore;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * 给Fragment添加newInstance方法，将需要的参数传入，设置到bundle中，然后setArguments(bundle)，最后在onCreate中进行获取。
@@ -33,9 +39,14 @@ import java.util.List;
  */
 public class FirstFragment extends BaseFragment {
 
+    @Bind(R.id.rv_content)
+    RecyclerView rvContent;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout refreshLayout;
 
     private ActionsCreator actionsCreator;
     private FirstStore firstStore;
+    private ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
 
     @Override
     protected int getLayoutId() {
@@ -60,12 +71,17 @@ public class FirstFragment extends BaseFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         actionsCreator.sendZhuangbiData();
+        refreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
+        refreshLayout.setRefreshing(true);
     }
 
     @Subscribe
     public void onLoadPageData(FirstStore.ZhuangbiDataEvent event) {
-        List<ZhuangbiImage> zhuangbiImages = firstStore.getZhuangbiImage();
-        Log.d("cw",zhuangbiImages.get(0).getDescription());
+        List<ZhuangbiImage> zhuangbiImage = firstStore.getZhuangbiImage();
+        adapter.setImages(zhuangbiImage);
+        rvContent.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        rvContent.setAdapter(adapter);
+        refreshLayout.setEnabled(false);
     }
 
     @Override

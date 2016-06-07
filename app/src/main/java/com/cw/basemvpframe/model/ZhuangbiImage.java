@@ -12,14 +12,19 @@
 
 package com.cw.basemvpframe.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  *
  * @author Cw
  * @date 16/6/6
  */
 public class ZhuangbiImage {
-    private String image_url;
-    private String description;
+    private @SerializedName(value = "image_url", alternate = {"url"})
+    String image_url;
+
+    private @SerializedName(value = "description", alternate = {"createdAt"})
+    String description;
 
     public String getImage_url() {
         return image_url;

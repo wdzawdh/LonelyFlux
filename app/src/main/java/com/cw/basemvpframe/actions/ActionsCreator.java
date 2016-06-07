@@ -8,6 +8,7 @@ import com.cw.basemvpframe.stores.Store;
 
 import java.util.List;
 
+import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -34,7 +35,7 @@ public class ActionsCreator {
     }
 
 
-    public static void ActionDectory(){
+    public static void actionDectory(){
         if(subscription!=null){
             subscription.unsubscribe();
         }
@@ -49,11 +50,51 @@ public class ActionsCreator {
                 .search("装逼")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::sendZhuangbiData);
+                .subscribe(new Observer<List<ZhuangbiImage>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ZhuangbiImage> zhuangbiImages) {
+                        dispatcher.dispatch(new ZhuangbiAction(ZhuangbiAction.ACTION_ZHANGBI_DATA, zhuangbiImages));
+                    }
+                });
     }
 
     public void sendZhuangbiData(List<ZhuangbiImage> zhuangbiImages) {
         dispatcher.dispatch(new ZhuangbiAction(ZhuangbiAction.ACTION_ZHANGBI_DATA, zhuangbiImages));
+    }
+
+    public void sendGankBeauty(int page){
+        subscription = Network.getGankApi()
+                .getBeauties(10, page)
+                .map(gankBeautyResult -> !gankBeautyResult.error?gankBeautyResult.results:null)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<ZhuangbiImage>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ZhuangbiImage> zhuangbiImages) {
+                        dispatcher.dispatch(new GankBeautyAction(GankBeautyAction.ACTION_BEAUTY_DATA,zhuangbiImages));
+                    }
+                });
+
     }
 
 }

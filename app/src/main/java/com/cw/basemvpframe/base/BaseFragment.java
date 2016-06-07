@@ -61,11 +61,10 @@ public abstract class BaseFragment extends Fragment {
         getHoldingActivity().removeFragment();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(mRootView);
+        ButterKnife.bind(this,mRootView);
         initView(mRootView, savedInstanceState);
         return mRootView;
     }
@@ -74,7 +73,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(mRootView);
-        ActionsCreator.ActionDectory();
+        ActionsCreator.actionDectory();
     }
 
 }
