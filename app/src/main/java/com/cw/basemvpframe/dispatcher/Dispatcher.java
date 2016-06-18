@@ -16,7 +16,8 @@ public class Dispatcher {
     private static Dispatcher instance;
     private final List<Store> stores = new ArrayList<>();
 
-    private Dispatcher() {}
+    private Dispatcher() {
+    }
 
     public static Dispatcher newInstance() {
         if (instance == null) {
@@ -26,6 +27,9 @@ public class Dispatcher {
     }
 
     public void register(final Store store) {
+        if (store == null) {
+            return;
+        }
         if (!stores.contains(store)) {
             stores.add(store);
         }

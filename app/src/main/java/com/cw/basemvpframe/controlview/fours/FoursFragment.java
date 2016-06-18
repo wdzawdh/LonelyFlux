@@ -17,6 +17,9 @@ import android.view.View;
 
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.base.BaseFragment;
+import com.cw.basemvpframe.stores.Store;
+
+import rx.Subscription;
 
 /**
  *
@@ -25,8 +28,13 @@ import com.cw.basemvpframe.base.BaseFragment;
  */
 public class FoursFragment extends BaseFragment {
 
-    public static FoursFragment newInstance() {
-        return new FoursFragment();
+    private static FoursFragment foursFragment;
+
+    public static BaseFragment getInstance() {
+        if(foursFragment==null){
+            foursFragment = new FoursFragment();
+        }
+        return foursFragment;
     }
 
     @Override
@@ -37,5 +45,15 @@ public class FoursFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_fours;
+    }
+
+    @Override
+    protected Subscription dispatcherAction() {
+        return null;
+    }
+
+    @Override
+    protected Store createStore() {
+        return null;
     }
 }

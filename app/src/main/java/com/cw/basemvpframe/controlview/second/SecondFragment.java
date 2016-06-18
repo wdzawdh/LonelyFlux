@@ -13,20 +13,20 @@
 package com.cw.basemvpframe.controlview.second;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cw.basemvpframe.R;
-import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseFragment;
-import com.cw.basemvpframe.controlview.adapter.ZhuangbiListAdapter;
+import com.cw.basemvpframe.controlview.adapter.GankBeautyListAdapter;
 import com.cw.basemvpframe.stores.SecondStore;
+import com.cw.basemvpframe.stores.Store;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
+import rx.Subscription;
 
 /**
  *
@@ -40,34 +40,36 @@ public class SecondFragment extends BaseFragment {
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout refreshLayout;
 
-    private ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
-    private ActionsCreator actionsCreator;
+    private GankBeautyListAdapter adapter = new GankBeautyListAdapter();
     private SecondStore secondStore;
     private int page;
+    private static SecondFragment secondFragment;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_second;
     }
 
-    public static SecondFragment newInstance() {
-        return new SecondFragment();
+    public static BaseFragment getInstance() {
+        if(secondFragment==null){
+            secondFragment = new SecondFragment();
+        }
+        return secondFragment;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initDependencies();
+    protected Store createStore() {
+        secondStore = new SecondStore();
+        return secondStore;
     }
 
-    private void initDependencies() {
-        secondStore = new SecondStore();
-        actionsCreator = ActionsCreator.newInstance(secondStore);
+    @Override
+    public Subscription dispatcherAction() {
+        return actionsCreator.sendGankBeauty(++page);
     }
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        actionsCreator.sendGankBeauty(++page);
     }
 
     @Subscribe

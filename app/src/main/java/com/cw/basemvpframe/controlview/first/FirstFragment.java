@@ -19,16 +19,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cw.basemvpframe.R;
-import com.cw.basemvpframe.actions.ActionsCreator;
 import com.cw.basemvpframe.base.BaseFragment;
 import com.cw.basemvpframe.controlview.adapter.ZhuangbiListAdapter;
 import com.cw.basemvpframe.model.ZhuangbiImage;
 import com.cw.basemvpframe.stores.FirstStore;
+import com.cw.basemvpframe.stores.Store;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
 import butterknife.Bind;
+import rx.Subscription;
 
 /**
  * 给Fragment添加newInstance方法，将需要的参数传入，设置到bundle中，然后setArguments(bundle)，最后在onCreate中进行获取。
@@ -44,33 +45,35 @@ public class FirstFragment extends BaseFragment {
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout refreshLayout;
 
-    private ActionsCreator actionsCreator;
-    private FirstStore firstStore;
     private ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
+    private FirstStore firstStore;
+    private static FirstFragment firstFragment;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_first;
     }
 
-    public static FirstFragment newInstance() {
-        return new FirstFragment();
+    public static BaseFragment getInstance() {
+        if(firstFragment==null){
+            firstFragment = new FirstFragment();
+        }
+        return firstFragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initDependencies();
+    protected Store createStore() {
+        firstStore = new FirstStore();
+        return firstStore;
     }
 
-    private void initDependencies() {
-        firstStore = new FirstStore();
-        actionsCreator = ActionsCreator.newInstance(firstStore);
+    @Override
+    public Subscription dispatcherAction() {
+        return actionsCreator.sendZhuangbiData();
     }
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        actionsCreator.sendZhuangbiData();
         refreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
         refreshLayout.setRefreshing(true);
     }

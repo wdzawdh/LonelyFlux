@@ -17,6 +17,9 @@ import android.view.View;
 
 import com.cw.basemvpframe.R;
 import com.cw.basemvpframe.base.BaseFragment;
+import com.cw.basemvpframe.stores.Store;
+
+import rx.Subscription;
 
 /**
  *
@@ -25,8 +28,13 @@ import com.cw.basemvpframe.base.BaseFragment;
  */
 public class ThirdFragment extends BaseFragment {
 
-    public static ThirdFragment newInstance() {
-        return new ThirdFragment();
+    private static ThirdFragment thirdFragment;
+
+    public static BaseFragment getInstance() {
+        if(thirdFragment==null){
+            thirdFragment = new ThirdFragment();
+        }
+        return thirdFragment;
     }
 
     @Override
@@ -38,4 +46,17 @@ public class ThirdFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_third;
     }
+
+    @Override
+    protected Subscription dispatcherAction() {
+        return null;
+    }
+
+    @Override
+    protected Store createStore() {
+        return null;
+    }
+
+
+
 }

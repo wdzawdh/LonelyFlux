@@ -6,5 +6,5 @@ import java.util.List;
 
 public class GankBeautyResult {
     public boolean error;
-    public List<ZhuangbiImage> results;
+    public List<GankBeauty> results;
 }

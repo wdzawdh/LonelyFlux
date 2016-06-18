@@ -42,15 +42,15 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FirstFragment.newInstance();
+                return FirstFragment.getInstance();
             case 1:
-                return SecondFragment.newInstance();
+                return SecondFragment.getInstance();
             case 2:
-                return ThirdFragment.newInstance();
+                return ThirdFragment.getInstance();
             case 3:
-                return FoursFragment.newInstance();
+                return FoursFragment.getInstance();
             default:
-                return FirstFragment.newInstance();
+                return FirstFragment.getInstance();
         }
 
     }

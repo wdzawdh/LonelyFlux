@@ -13,7 +13,7 @@ package com.cw.basemvpframe.stores;
 
 import com.cw.basemvpframe.actions.GankBeautyAction;
 import com.cw.basemvpframe.base.Action;
-import com.cw.basemvpframe.model.ZhuangbiImage;
+import com.cw.basemvpframe.model.GankBeauty;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
@@ -24,9 +24,9 @@ import java.util.List;
  */
 public class SecondStore extends Store {
 
-    private List<ZhuangbiImage> gankBeautyList;
+    private List<GankBeauty> gankBeautyList;
 
-    public List<ZhuangbiImage> getGankBeautyList() {
+    public List<GankBeauty> getGankBeautyList() {
         return gankBeautyList;
     }
 
