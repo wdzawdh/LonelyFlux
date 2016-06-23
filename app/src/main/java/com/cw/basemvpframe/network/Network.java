@@ -11,8 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
     private static ZhuangbiApi zhuangbiApi;
     private static GankApi gankApi;
-//    private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-//    private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
     public static ZhuangbiApi getZhuangbiApi() {
         if (zhuangbiApi == null) {

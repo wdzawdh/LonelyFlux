@@ -53,9 +53,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        ActionsCreator.actionDectory();
-    }
 }
